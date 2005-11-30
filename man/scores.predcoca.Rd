@@ -18,7 +18,7 @@
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{ an ordination result}
-  \item{display}{ partial match to access scores for 'sites' or 'species'.}
+  \item{display}{ partial match to access scores for \dQuote{sites} or \dQuote{species}.}
   \item{choices}{ the ordination axes to return.}
   \item{scaling}{ whether the species scores should be rescaled to the
     quarter root of the eigenvalues using \code{\link{rescale.symcoca}}.}

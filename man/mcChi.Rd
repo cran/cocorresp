@@ -2,8 +2,8 @@
 \alias{mcChi}
 \title{ Standardised chi-square residuals }
 \description{
-  Scales a matrix, Y, to is standardised chi-square residuals \eqn{(o -
-    e) / \sqrt{e}}{(o - e) / sqrt(e)} (if R0 = R, where R contains the row
+  Scales a matrix, Y, to its standardised chi-square residuals \eqn{(o -
+    e) / \sqrt{e}}{(o - e) / sqrt(e)} (if \eqn{R_0 = R}, where R contains the row
   sums of matrix Y) so that further analysis can be unweighted
 }
 \usage{
@@ -18,7 +18,7 @@ mcChi(Y, R0, eps = 1e-06)
 \details{
   This function implements equation 8 of ter Braak and Schaffers (2004)
   by firstly applying equation 7 to form matrix Q using row and column
-  sums of Y as weights, and secondly applying equation 8 to form a
+  sums of Y as weights, and, secondly, by applying equation 8 to form a
   matrix of standardised chi-square residuals from Q by
   pre-multiplication of Q by \eqn{\sqrt{R_0}}{sqrt(R0)} and
   post-multiplication of Q by \eqn{\sqrt{K}}{sqrt(K)}, where K is the

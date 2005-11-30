@@ -13,10 +13,10 @@
 }
 
 \arguments{
-  \item{x}{ an object of class \code{predcoca}, the result of a
+  \item{x}{ an object of class \code{"predcoca"}, the result of a
     call to \code{\link{predcoca.eigen}} or \code{\link{predcoca.simpls}}.}
   \item{pages}{ the number of pages to print the biplots on. Currently ignored.}
-  \item{axes}{ a vector of length 2 indicating which predictive Co-CA axes to plot.}
+  \item{axes}{ a vector of length 2 indicating which predictive CoCA axes to plot.}
   \item{cex}{ a vector of length 2, containing the character expansion
     factors to use for the samples (sites) and the species.}
   \item{pch}{ a vector of length 2, containing the plotting character to

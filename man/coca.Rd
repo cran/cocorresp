@@ -11,7 +11,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Fit Co-Correspondence Analysis Ordination Models}
 \description{
-  \code{coca} is used to fit Co-Correspondence Analysis (Co-CA)
+  \code{coca} is used to fit Co-Correspondence Analysis (CoCA)
   models. It can fit predictive or symmetric models to two community
   data matrices containing species abundance data.
   \code{predcoca.simpls}, \code{predcoca.eigen} and \code{symcoca}
@@ -69,8 +69,8 @@ symcoca(y, x, n.axes = NULL, R0 = NULL,
     weights are determined from \code{y} (default) or \code{x} and \code{y}
     (\code{symmetric = TRUE} only).}
 
-  \item{n.axes}{the number of Co-CA axes to extract. If missing (default)
-    the \code{n.axes} is \eqn{min(ncol(y), ncol(x), n.row(y), nrow(x)) -
+  \item{n.axes}{the number of CoCA axes to extract. If missing (default)
+    the \code{n.axes} is \eqn{min(ncol(y), ncol(x), nrow(y), nrow(x)) -
       1}.}
 
   \item{symmetric}{if \code{method} is \code{"symmetric"} then
@@ -97,13 +97,13 @@ symcoca(y, x, n.axes = NULL, R0 = NULL,
   A typical model has the form \code{response ~ terms} where
   \code{response} is the (numeric) response data frame and \code{terms}
   is a series of terms which specifies a linear predictor for
-  \code{response}. A typical form for \code{terms} is \code{\dQuote{.}},
+  \code{response}. A typical form for \code{terms} is \code{.},
   which is shorthand for "all variables" in \code{data}. If \code{.} is
   used, \code{data} must also be provided. If specific species
   (variables) are required then \code{terms} should take the form
-  \code{\dQuote{spp1 + spp2 + spp3}}.
+  \code{spp1 + spp2 + spp3}.
 
-  The default is to fit a predictive Co-CA model using SIMPLS via a
+  The default is to fit a predictive CoCA model using SIMPLS via a
   modified version of \code{\link[pls]{simpls.fit}} from package
   \code{pls}. Alternatively, \code{reg.method = "eigen"} fits the model
   using an older, slower eigen analysis version of the SIMPLS
@@ -114,61 +114,61 @@ symcoca(y, x, n.axes = NULL, R0 = NULL,
   \code{coca} returns a list with \code{method} and \code{reg.method}
   determining the actual components returned.
 
-  \item{nam.dat}{list with components \code{\dQuote{namY}} and
-    \code{\dQuote{namX}} containing the names of the response and the
+  \item{nam.dat}{list with components \code{namY} and
+    \code{namX} containing the names of the response and the
     predictor(s) respectively.}
 
-  \item{call}{the matched call}
+  \item{call}{the matched call.}
 
-  \item{method}{the Co-CA method used, one of \code{\dQuote{predictive}}
-    or \code{\dQuote{symmetric}}.}
+  \item{method}{the CoCA method used, one of \code{"predictive"}
+    or \code{"symmetric"}.}
 
   \item{scores}{the species and site scores of the fitted
     model.}
 
   \item{loadings}{the site loadings of the fitted model for the response
-    and the predictor. (Predictive Co-CA via SIMPLS only)}
+    and the predictor. (Predictive CoCA via SIMPLS only.)}
 
   \item{fitted}{the fitted values for the response. A list with 2
-    components \code{\dQuote{Yhat}} (the fitted values) and
-    \code{\dQuote{Yhat1}} (the transformed fitted values. (Predictive
-    Co-CA via SIMPLS only)}
+    components \code{Yhat} (the fitted values) and
+    \code{Yhat1} (the transformed fitted values. (Predictive
+    CoCA via SIMPLS only.)}
 
-  \item{varianceExp}{list with components \code{\dQuote{Yblock}} and
-    \code{\dQuote{Xblock}} containing the variances in the response and
+  \item{varianceExp}{list with components \code{Yblock} and
+    \code{Xblock} containing the variances in the response and
     the predictor respectively, explained by each fitted PLS
-    axis. (Predictive Co-CA via SIMPLS only)}
+    axis. (Predictive CoCA via SIMPLS only.)}
 
-  \item{totalVar}{list with components \code{\dQuote{Yblock}} and
-    \code{\dQuote{Xblock}} containing the total variance in the response
-    and the predictor respectively. (Predictive Co-CA via SIMPLS only)}
+  \item{totalVar}{list with components \code{Yblock} and
+    \code{Xblock} containing the total variance in the response
+    and the predictor respectively. (Predictive CoCA via SIMPLS only.)}
 
   \item{lambda}{the Eigenvalues of the analysis.}
 
   \item{n.axes}{the number of fitted axes}
 
   \item{Ychi}{a list containing the mean-centered chi-square matrices
-    for the response (\code{\dQuote{Ychi1}}) and the predictor
-    (\code{\dQuote{Ychi2}}). (Predictive Co-CA only)}
+    for the response (\code{Ychi1}) and the predictor
+    (\code{Ychi2}). (Predictive CoCA only.)}
 
   \item{R0}{the (possibly user-supplied) row weights used in the analysis.}
 
-  \item{X}{X-Matrix (symmetric Co-CA only).}
+  \item{X}{X-Matrix (symmetric CoCA only).}
 
-  \item{residuals}{Residuals of a symmetric model (symmetric Co-CA
+  \item{residuals}{Residuals of a symmetric model (symmetric CoCA
     only).}
 
-  \item{inertia}{list with components \code{\dQuote{total}} and
-    \code{\dQuote{residual}} containing the total and residual inertia
-    for the response and the predictor (symmetric Co-CA only).}
+  \item{inertia}{list with components \code{total} and
+    \code{residual} containing the total and residual inertia
+    for the response and the predictor (symmetric CoCA only).}
 
   \item{rowsum}{a list with the row sums for the response
-    (\code{\dQuote{rsum1}}) and the preditor (\code{\dQuote{rsum2}})
-    (symmetric Co-CA only).}
+    (\code{rsum1}) and the preditor (\code{rsum2})
+    (symmetric CoCA only).}
   
   \item{colsum}{a list with the column sums for the response
-    (\code{\dQuote{csum1}})and the preditor (\code{\dQuote{csum2}})
-    (symmetric Co-CA only).}
+    (\code{csum1})and the preditor (\code{csum2})
+    (symmetric CoCA only).}
 }
 \references{
 
@@ -179,14 +179,16 @@ symcoca(y, x, n.axes = NULL, R0 = NULL,
 }
 \author{
   Original Matlab code by C.J.F. ter Braak and A.P. Schaffers. R
-  port by Gavin L. Simpson.
+  port by Gavin L. Simpson. Formula method for \code{coca} uses a
+  modified version of \code{\link[vegan]{ordiParseFormula}} by Jari
+  Oksanen to handle formulea.
 }
 
 \seealso{
 
   \code{\link{crossval}} for cross-validation and
   \code{\link{permutest.coca}} for permutation test to determine the
-  number of PLS axes to retain in for predictive Co-CA.
+  number of PLS axes to retain in for predictive CoCA.
   
   \code{\link{summary.predcoca}} and \code{\link{summary.symcoca}} for
   summary methods.}

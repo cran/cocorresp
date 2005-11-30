@@ -1,5 +1,5 @@
 "permutest.coca" <-
-function(x, R0 = NULL, permutations = 99, verbose = TRUE, ...)
+function(x, R0 = NULL, permutations = 99, n.axes = x$n.axes, verbose = TRUE, ...)
   {
     permtest <- function(Y, X1, X0 = NULL, permutations, step)
       {
@@ -80,12 +80,19 @@ function(x, R0 = NULL, permutations = 99, verbose = TRUE, ...)
       }
     Ychi1 <- x$Ychi$Ychi1
     Ychi2 <- x$Ychi$Ychi2
-    n.axes <- x$n.axes
+    if(n.axes > x$n.axes)
+      {
+        n.axes <- x$n.axes
+        warning("n.axes too large, reset to x$n.axes.")
+      }
     pval <- permstat <- inertia <- fitax <- numeric(n.axes)
     for(j in 1:n.axes)
       {
         if(verbose)
-          cat("Permutations for axis:", j)
+          {
+            cat("Permutations for axis:", j)
+            flush.console()
+          }
         if(j == 1)
           covar <- NULL
         ptest <- permtest(Ychi1, Ychi2, X0 = covar, permutations, step = j)
@@ -111,7 +118,10 @@ function(x, R0 = NULL, permutations = 99, verbose = TRUE, ...)
         inertia[j] <- res.mat1$inertia$total
         fitax[j] <- res.mat1$inertia$fitted
         if(verbose)
-          cat(" - completed\n")
+          {
+            cat(" - completed\n")
+            flush.console()
+          }
       }
     pcent.fit <- 100 * fitax / total.inertia1
     retval <- list(pval = pval, permstat = permstat,

@@ -14,11 +14,11 @@
 }
 
 \arguments{
-  \item{x}{ an object of class \code{\link{symcoca}}, the result of
+  \item{x}{ an object of class \code{"symcoca"}, the result of
     a call to \code{\link{symcoca}}.}
   \item{pages}{ the number of pages to print the biplots on. Currently
     ignored.}
-  \item{axes}{ a vector of length 2 indicating which predictive Co-CA
+  \item{axes}{ a vector of length 2 indicating which predictive CoCA
     axes to plot.}
   \item{scaling}{ the scaling to be applied. See \code{\link{scores.symcoca}}.}
   \item{cex}{ a vector of length 2, containing the character expansion
