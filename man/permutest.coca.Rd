@@ -9,11 +9,11 @@
 
 \description{
   A permutation test for predictive co-correspondence analysis models to
-  assess the significance of each Co-CA ordination axes.
+  assess the significance of each CoCA ordination axes.
 }
 \usage{
 permutest.coca(x, R0 = NULL, permutations = 99,
-               verbose = TRUE, \ldots)
+               n.axes = x$n.axes, verbose = TRUE, \ldots)
 
 %\method{print}{permutest.coca}(x, digits = max(3, getOption("digits") - 3), \ldots)
 
@@ -24,13 +24,15 @@ permutest.coca(x, R0 = NULL, permutations = 99,
 }
 
 \arguments{
-  \item{x}{ an object of class \code{predcoca}}
+  \item{x}{ an object of class \code{"predcoca"}.}
   \item{R0}{ row weights to use in the analysis. If missing, the
     default, these are determined from \code{x}.}
-  \item{permutations}{ the number of permutations to perform}
+  \item{permutations}{ the number of permutations to perform.}
+  \item{n.axes}{ The number of axes to test. Defaults to the number of
+    axes stated in \code{x$n.axes}.}
   \item{verbose}{if \code{TRUE}, the default, print information on the
-    progress of the permutation test procedure}
-  \item{object}{ an object of class \code{permutest.coca}}
+    progress of the permutation test procedure.}
+  \item{object}{ an object of class \code{"permutest.coca"}.}
   \item{\ldots}{arguments to be passed to other methods.}
 }
 \details{
@@ -39,7 +41,7 @@ permutest.coca(x, R0 = NULL, permutations = 99,
   predictive co-correspondence analysis is to test the statistical
   significance of each ordination axis using permutation tests.
 
-  The test statistic used is the \emph{F}-ratio based on the fit by the
+  The test statistic used is the \emph{F}-ratio based on the fit of the
   first axis to the response data (ter Braak and Smilauer 2002). The
   second and subsequent axes are tested by treating previous axes as
   co-variables.
@@ -72,7 +74,7 @@ permutest.coca(x, R0 = NULL, permutations = 99,
 
   ter Braak, C.J.F. and Smilauer, P. (2002) \emph{Canoco reference manual
     and CanoDraw for Windows user's guide: software for canonical
-    community ordination. Version 4.5.}. New York: Microcomputer Power.
+    community ordination. Version 4.5}. New York: Microcomputer Power.
 }
 
 \author{Gavin L. Simpson, based on Matlab code by C.J.F. ter Braak and
@@ -117,6 +119,11 @@ crossval(beetles, plants)
 
 ## permutation test to assess significant PLS components - takes a while
 bp.perm <- permutest.coca(bp.pred, permutations = 99)
+bp.perm
+summary(bp.perm)
+
+## permutation test, this time only testing the first 2 axes
+bp.perm <- permutest.coca(bp.pred, permutations = 99, n.axes = 2)
 bp.perm
 summary(bp.perm)
 }

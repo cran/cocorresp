@@ -24,13 +24,13 @@ coinertia(X, Dp, Y, Dq, Dn, n.axes)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{X}{ \eqn{Q_1}, matrix of expected abundances under row-column
-    independence in the original \code{\dQuote{Y}} species matrix when
+    independence in the original \code{Y} species matrix when
     treated as a contingency table.}
-  \item{Dp}{ \eqn{K_1}, species (column) weights for \code{\dQuote{X}}.}
+  \item{Dp}{ \eqn{K_1}, species (column) weights for \code{X}.}
   \item{Y}{ \eqn{Q_2}, matrix of expected abundances under row-column
-    independence in the original \code{\dQuote{X}} species matrix when
+    independence in the original \code{X} species matrix when
     treated as a contingency table.}
-  \item{Dq}{ \eqn{K_2}, species (column) weights for \code{\dQuote{Y}}.}
+  \item{Dq}{ \eqn{K_2}, species (column) weights for \code{Y}.}
   \item{Dn}{ site weights \eqn{R_0}.}
   \item{n.axes}{ number of axes to calculate the co-inertia analysis
     for.}
@@ -44,13 +44,13 @@ coinertia(X, Dp, Y, Dq, Dn, n.axes)
 %}
 \value{
   A list with the following components:
-  \item{U1 }{column weights of \code{\dQuote{X}}}
-  \item{U2 }{column weights of \code{\dQuote{Y}}}
-  \item{X1 }{rowscores of \code{\dQuote{X}}}
-  \item{X2 }{rowscores of \code{\dQuote{Y}}}
-  \item{lambda }{the Eigenvalues (squares of the singular values)}
-  \item{n.axes }{number of axes requested}
-  \item{call }{the matched function call}
+  \item{U1 }{column weights of \code{X}.}
+  \item{U2 }{column weights of \code{Y}.}
+  \item{X1 }{rowscores of \code{X}.}
+  \item{X2 }{rowscores of \code{Y}.}
+  \item{lambda }{the Eigenvalues (squares of the singular values).}
+  \item{n.axes }{number of axes requested.}
+  \item{call }{the matched function call.}
 }
 \references{
 
@@ -67,15 +67,15 @@ coinertia(X, Dp, Y, Dq, Dn, n.axes)
 
 \note{ This function is not yet meant to be called directly by the
   user. If you wish to use it directly, see the function definition for
-  \code{\dQuote{\link{symcoca}}} which demonstrates how to prepare the
+  \code{\link{symcoca}} which demonstrates how to prepare the
   relevant input matrices.
 
-  Note that in this function, \code{\dQuote{X}} corresponds to the input
-  matrix \code{\dQuote{y}} and \code{\dQuote{Y}} corresponds to the
-  input matrix \code{\dQuote{x}} in
-  \code{\dQuote{\link{symcoca}}}. Confusing! This will be changed in a
-  future release but for now the arguments follow those of the original
-  Matlab code - perhaps a little too closely!
+  Note that in this function, \code{X} corresponds to the input
+  matrix \code{y} and \code{Y} corresponds to the
+  input matrix \code{x} in \code{\link{symcoca}}.
+  Confusing! This will be changed in a future release but for now the
+  arguments follow those of the original Matlab code - perhaps a little
+  too closely!
 }
 
 \seealso{ \code{\link{symcoca}} for the function that calls

@@ -3,9 +3,9 @@
 \alias{rescale.default}
 \alias{rescale.symcoca}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Rescales Co-CA species scores}
+\title{Rescales CoCA species scores}
 \description{
-  Rescales Co-CA species scores to the quarter root of the 
+  Rescales CoCA species scores to the quarter root of the 
   eigenvalues.
 }
 \usage{
@@ -18,13 +18,13 @@ rescale(object, \ldots)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{an R object. Currently only objects of class 
-    \code{symcoca} are supported.}
+    \code{"symcoca"} are supported.}
   \item{axes}{the number of axes to rescale}
   \item{\dots}{other arguments to be passed to \code{rescale}
     methods. Currently not used here.}
 }
 \details{
-  Currently only implemented for objects of class \code{symcoca}.
+  Currently only implemented for objects of class \code{"symcoca"}.
 }
 \value{
   Returns a list with the following components:

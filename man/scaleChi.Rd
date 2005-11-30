@@ -21,7 +21,7 @@ scaleChi(Y, Kn, R0, eps = 1e-06)
 }
 %\details{}
 \value{
-  \item{Yr }{the matrix of standardised chi-squared residuals of Y}
+  \item{Yr }{the matrix of standardised chi-squared residuals of Y.}
 }
 
 \references{

@@ -18,7 +18,7 @@ function(x, choices = c(1, 2), display = c("site", "species"),
       }
     retval$site <- if ("site" %in% take)
       list(X1 = x$scores$site$Y[, choices, drop = FALSE],
-           X2 = x$scores$site$Y[, choices, drop = FALSE])
+           X2 = x$scores$site$X[, choices, drop = FALSE])
     retval$loadings <- if ("loadings" %in% take)
       list(Y1 = x$loadings$Y[, choices, drop = FALSE],
            Y2 = x$loadings$X[ choices, drop = FALSE])

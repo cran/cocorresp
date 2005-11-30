@@ -21,15 +21,15 @@ crossval(y, x, n.axes = min(dim(x), dim(y)) - 1,
 }
 
 \arguments{
-  \item{y}{the response species matrix}
-  \item{x}{the predictor species matrix}
+  \item{y}{the response species matrix.}
+  \item{x}{the predictor species matrix.}
   \item{n.axes}{the number of axes to calculate the leave-one-out
     cross-validation for. Default is to perform the CV for all
     extractable axes.}
   \item{centre}{centre \code{y} and \code{x} during analysis? Currently
     ignored as it may not be neccessary.}
   \item{verbose}{if \code{TRUE}, the default, print information on the
-    progress of the cross-validation procedure}
+    progress of the cross-validation procedure.}
   \item{object}{an object of class \code{crossval} as returned by
     \code{crossval}.}
   \item{axes}{ the number of axes to summarise results for.}

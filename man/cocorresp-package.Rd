@@ -17,12 +17,12 @@ Co-correspondence analysis ordination methods for community ecology
 \tabular{ll}{
 Package: \tab cocorresp\cr
 Type: \tab Package\cr
-Version: \tab 0.1-2\cr
-Date: \tab 2005-11-10\cr
+Version: \tab 0.1-3\cr
+Date: \tab 2005-11-30\cr
 Depends: \tab vegan\cr
 License: \tab GPL Version 2\cr
 Encoding: \tab UTF-8\cr
-Packaged: \tab Thu Nov 10 08:08:18 2005; gavin\cr
+Packaged: \tab Wed Nov 30 12:54:49 2005; gavin\cr
 }
 }
 \author{

@@ -23,7 +23,7 @@
   \item{object}{an object of class \code{"predcoca"} or
     \code{"symcoca"}. Generally the result of a call to \code{\link{coca}}.}
   \item{axes}{the number of CoCA axes to return in the result set.}
-  \item{display}{one or both of \code{"species"} and/or \code{"sites"}}
+  \item{display}{one or both of \code{"species"} and/or \code{"site"}}
   \item{scaling}{for objects of class \code{"symcoca"} only, the scaling
     to be applied to the results. One of \code{"1"} or \code{"2"}. See
     below for details of scalings used.}
@@ -34,8 +34,8 @@
   A list with the some of the following components:
   \item{cocaScores}{The site and or species scores for the axes requested.}
   \item{call}{The call used to fit the model.}
-  \item{lambda}{The eigenvalues for the axes requested. Not for predcoca
-    fit using SIMPLS.}
+  \item{lambda}{The eigenvalues for the axes requested. Not for
+    \code{\link{predcoca.simpls}}.}
   \item{namY, namX}{the names of the response and predictor either
     supplied by the user or derived from the original call.}
   \item{loadings}{a list with two components \code{loadings1} and

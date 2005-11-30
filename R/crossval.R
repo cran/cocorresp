@@ -40,7 +40,10 @@ function(y, x, n.axes = min(dim(x), dim(y)) - 1, centre = TRUE,
     for (i in 1:dimx[1])
       {
         if(verbose)
-          cat("LOO - Site:", i)
+          {
+            cat("LOO - Site:", i)
+            flush.console()
+          }
         #if (centre)
         #  {
             xChi.loo <- mcChi(x[-i, ], R0[-i])
@@ -68,7 +71,10 @@ function(y, x, n.axes = min(dim(x), dim(y)) - 1, centre = TRUE,
           cumpress[i, ] <- colSums(press[seq(i, (dimx[1] * dimy[2]),
                                              by = dimy[2]) ,])
         if(verbose)
-          cat(" - Complete\n")
+          {
+            cat(" - Complete\n")
+            flush.console()
+          }
       }
     #if(dimy[2] > 1)
     #  {
