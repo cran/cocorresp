@@ -29,7 +29,7 @@ coinertiaI(X, Y, fast = TRUE)
   \item{weights }{A list with components \code{X} and
     \code{Y} containing the left and right singular vectors
     respectivley of the SVD on the triplets.}
-  \item{scores }{A list with components \code{\dQuote{X}} and
+  \item{scores }{A list with components \code{X} and
     \code{Y}, containing the row scores of the
     \code{X} and \code{Y} species matrices. These are
     the result of a matrix multiplication of \code{X} by the
