@@ -16,3 +16,20 @@ function(Y, R0, eps = 0.000001)
     return(retval)
   }
 
+"mcLin" <-
+function(X, R0, eps = 0.000000001)
+  {
+    ## calculates the weighted autoscaled Xs and the weighted mean
+    ## and standarddeviation of columns of matrix X using row weights W
+    ## (a col vector) and multiplies with sqrt of W so that rXs can be
+    ## put in an unweighted analysis
+    Wn <- R0 / sum(R0);
+    Wmeans <- colSums(diag(Wn) %*% X)
+    rXs <- sweep(X, 2, Wmeans)
+    sd <- sqrt(colSums(diag(Wn) %*% (rXs*rXs)))
+    rXs <- sweep(rXs, 2, (sd + eps), "/")
+    rXs <- diag(sqrt(Wn)) %*% rXs
+    retval <- list(rXs = rXs, mean = Wmeans, sd = sd)
+    class(retval) <- "mcLin"
+    
+}

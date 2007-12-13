@@ -9,3 +9,15 @@ function(Y, Kn, R0, eps = 0.000001)
     return(Yr)
   }
 
+"scaleLin" <-
+function(X, mean, sd, r, eps = 0.00000001)
+  {
+    ## [Xs] = scale_lin(X, mean, sd, r)
+    ## centers and standardizes wrt to a prefined mean and
+    ## standard deviation used in crossval_chi_lin
+    X <- sweep(X, 2, mean)
+    X <- sweep(X, 2, sd + eps, "/")
+    r <- as.matrix(r)
+    Xs <- diag(sqrt(r)) %*% X
+    return(Xs)
+}
