@@ -1,0 +1,54 @@
+## Imports
+##
+## vegan
+importFrom(vegan, scores, pasteCall, permutest, envfit, eigenvals)
+## stats
+import(stats)
+## graphics
+import(graphics)
+
+## Exports
+export(coca, coinertia, corAxis, crossval, rescale)
+
+### S3 Methods
+##
+## main user-visible functions
+S3method(coca, default)
+S3method(coca, formula)
+S3method(coinertia, default)
+S3method(corAxis, default)
+S3method(corAxis, symcoca)
+S3method(eigenvals, coinertia)
+S3method(eigenvals, coca)
+S3method(envfit, coca)
+S3method(fitted, symcoca)
+S3method(permutest, coca)
+S3method(rescale, default)
+S3method(rescale, symcoca)
+S3method(resid, symcoca)
+S3method(scores, symcoca)
+S3method(scores, predcoca)
+
+## plotting methods
+S3method(plot, predcoca)
+S3method(plot, symcoca)
+S3method(points, coca)
+
+## print methods
+S3method(print, coinertia)
+S3method(print, fitCoinertia)
+S3method(print, crossval)
+S3method(print, fitted.symcoca)
+S3method(print, permutest.coca)
+S3method(print, predcoca)
+S3method(print, summary.fitCoinertia)
+S3method(print, summary.symcoca)
+S3method(print, summary.predcoca)
+S3method(print, symcoca)
+
+## print methods
+S3method(summary, fitCoinertia)
+S3method(summary, symcoca)
+S3method(summary, predcoca)
+S3method(summary, crossval)
+S3method(summary, permutest.coca)
