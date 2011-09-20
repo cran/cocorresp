@@ -1,0 +1,845 @@
+
+R version 3.0.2 Patched (2013-10-07 r64035) -- "Frisbee Sailing"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "cocorresp"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('cocorresp')
+Loading required package: vegan
+Loading required package: permute
+Loading required package: lattice
+This is vegan 2.0-10
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("beetles")
+> ### * beetles
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: beetles
+> ### Title: Carabid beetles and vascular plants in Dutch roadside verges
+> ### Aliases: beetles plants verges
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(beetles)
+> data(plants)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bryophyte")
+> ### * bryophyte
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bryophyte
+> ### Title: Bryophytes and vascular plants in Carpathian spring meadows
+> ### Aliases: bryophyte vascular
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(bryophyte)
+> data(vascular)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("coca")
+> ### * coca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: coca
+> ### Title: Fit Co-Correspondence Analysis Ordination Models
+> ### Aliases: coca coca.formula coca.default print.predcoca print.symcoca
+> ### Keywords: multivariate regression models
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> ## symmetric CoCA
+> data(beetles)
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> data(plants)
+> ## fit the model
+> bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix x
+
+> bp.sym
+
+Symmetric Co-Correspondence Analysis
+
+Call: symcoca(y = y, x = x, n.axes = n.axes, R0 = weights, symmetric =
+symmetric, nam.dat = nam.dat)
+
+Eigenvalues:
+ COCA 1    COCA 2    COCA 3    COCA 4    COCA 5    COCA 6    COCA 7    COCA 8   
+  0.253     0.129     0.081     0.074     0.058     0.047     0.037     0.032   
+ COCA 9   COCA 10   COCA 11   COCA 12   COCA 13   COCA 14   COCA 15   COCA 16   
+  0.031     0.023     0.021     0.018     0.017     0.016     0.014     0.012   
+COCA 17   COCA 18   COCA 19   COCA 20   COCA 21   COCA 22   COCA 23   COCA 24   
+  0.011     0.010     0.009     0.008     0.007     0.006     0.005     0.004   
+COCA 25   COCA 26   COCA 27   COCA 28   COCA 29   
+  0.004     0.003     0.002     0.001     0.001   
+
+Inertia:
+           beetles plants
+Total:      3.9883   5.76
+Explained:  3.9708   5.74
+Residual:   0.0175   0.02
+
+> plot(bp.sym)
+> 
+> ## predictive CoCA using SIMPLS and formula interface
+> bp.pred <- coca(beetles ~ ., data = plants)
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix x
+
+> ## should retain only the useful PLS components for a parsimonious model
+> 
+> ## Leave-one-out crossvalidation - this takes a while
+> 
+> ## Not run: 
+> ##D crossval(beetles, plants)
+> ##D ## so 2 axes are sufficient
+> ##D ## permutation test to assess significant PLS components - takes a while
+> ##D bp.perm <- permutest(bp.pred, permutations = 99)
+> ##D bp.perm
+> ## End(Not run)
+> 
+> ## agrees with the Leave-one-out cross-validation
+> ## refit the model with only 2 PLS components
+> bp.pred <- coca(beetles ~ ., data = plants, n.axes = 2)
+Warning in coca.formula(beetles ~ ., data = plants, n.axes = 2) :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, n.axes = 2) :
+  some species contain no data and were removed from data matrix x
+
+> bp.pred
+
+Predictive Co-Correspondence Analysis
+
+Call: predcoca.simpls(y = y, x = x, R0 = weights, n.axes = n.axes,
+nam.dat = nam.dat)
+
+Percentage Variance Explained:
+
+Y-block: variance explained in beetles (response) 
+             Comp 1  Comp 2
+Individual:   10.28   7.924
+Cumulative:   10.28  18.208
+
+X-block: variance explained in plants (predictor) 
+             Comp 1  Comp 2
+Individual:   11.28   7.679
+Cumulative:   11.28  18.956
+
+> plot(bp.pred)
+> 
+> ## predictive CoCA using Eigen-analysis
+> data(bryophyte)
+> data(vascular)
+> carp.pred <- coca(y = bryophyte, x = vascular, reg.method = "eigen")
+> carp.pred
+
+Predictive Co-Correspondence Analysis
+
+Call: predcoca.eigen(y = y, x = x, R0 = weights, n.axes = n.axes,
+nam.dat = nam.dat)
+
+Eigenvalues:
+ COCA 1   COCA 2   COCA 3   COCA 4   COCA 5   COCA 6   COCA 7   COCA 8  
+  0.301    0.072    0.022    0.017    0.015    0.010    0.007    0.006  
+ COCA 9  COCA 10  COCA 11  COCA 12  COCA 13  COCA 14  COCA 15  COCA 16  
+  0.005    0.005    0.004    0.004    0.003    0.003    0.003    0.003  
+COCA 17  COCA 18  COCA 19  COCA 20  COCA 21  COCA 22  COCA 23  COCA 24  
+  0.002    0.002    0.002    0.002    0.001    0.001    0.001    0.001  
+COCA 25  COCA 26  COCA 27  COCA 28  COCA 29  
+  0.001    0.001    0.001    0.001    0.001  
+
+> 
+> ## determine important PLS components - takes a while
+> ## Not run: 
+> ##D crossval(bryophyte, vascular)
+> ##D (carp.perm <- permutest.coca(carp.pred, permutations = 99))
+> ## End(Not run)
+> 
+> ## 2 components again, refit
+> carp.pred <- coca(y = bryophyte, x = vascular,
++                   reg.method = "eigen", n.axes = 2)
+> carp.pred
+
+Predictive Co-Correspondence Analysis
+
+Call: predcoca.eigen(y = y, x = x, R0 = weights, n.axes = n.axes,
+nam.dat = nam.dat)
+
+Eigenvalues:
+COCA 1  COCA 2  
+ 0.301   0.072  
+
+> ## plot
+> plot(carp.pred)
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("coinertia")
+> ### * coinertia
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: coinertia
+> ### Title: Co-inertia analysis
+> ### Aliases: coinertia coinertia.default
+> ### Keywords: multivariate models
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> data(beetles, plants)
+> coin <- coinertia(beetles, plants)
+Warning in coinertia.default(beetles, plants) :
+  some species contain no data and were removed from data matrix y
+
+Warning in coinertia.default(beetles, plants) :
+  some species contain no data and were removed from data matrix x
+
+> coin
+
+Coinertia Analysis
+
+Call: coinertia.default(y = beetles, x = plants)
+
+Eigenvalues:
+ COIN 1    COIN 2    COIN 3    COIN 4    COIN 5    COIN 6    COIN 7    COIN 8   
+  0.591     0.316     0.203     0.104     0.067     0.061     0.053     0.044   
+ COIN 9   COIN 10   COIN 11   COIN 12   COIN 13   COIN 14   COIN 15   COIN 16   
+  0.035     0.023     0.022     0.014     0.013     0.011     0.010     0.008   
+COIN 17   COIN 18   COIN 19   COIN 20   COIN 21   COIN 22   COIN 23   COIN 24   
+  0.007     0.005     0.004     0.003     0.003     0.002     0.002     0.002   
+COIN 25   COIN 26   COIN 27   COIN 28   COIN 29   
+  0.001     0.001     0.001     0.000     0.000   
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("corAxis")
+> ### * corAxis
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: corAxis
+> ### Title: Correlation between ordination axes
+> ### Aliases: corAxis.symcoca corAxis corAxis.default
+> ### Keywords: univar
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> ## load some data
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the beetle data
+> beetles <- log(beetles + 1)
+> 
+> ## symmetric Co-CA model
+> beetles.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## correlations between axes
+> corAxis(beetles.sym)
+COCA 1 COCA 2 COCA 3 COCA 4 COCA 5 COCA 6 
+0.9451 0.9264 0.8066 0.9309 0.8515 0.8989 
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("crossval")
+> ### * crossval
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: crossval
+> ### Title: Cross-validation for predictive Co-Correspondence Analysis
+> ###   models
+> ### Aliases: crossval print.crossval summary.crossval
+> ###   print.summary.crossval
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> ## load the data sets
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> 
+> ## predictive CoCA using SIMPLS and formula interface
+> bp.pred <- coca(beetles ~ ., data = plants)
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix x
+
+> ## should retain only the useful PLS components for a
+> ## parsimonious model
+> 
+> ## Leave-one-out crossvalidation - this takes a while
+> ## Not run: 
+> ##D crossval(beetles, plants)
+> ## End(Not run)
+> ## so 2 axes are sufficient
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("envfit.coca")
+> ### * envfit.coca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: envfit.coca
+> ### Title: Fit an environmental vector or factor to a Co-CA ordination
+> ### Aliases: envfit.coca
+> ### Keywords: multivariate htest
+> 
+> ### ** Examples
+> 
+> ## symmetric CoCA
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> 
+> ## fit the model
+> bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## load the environmental data
+> data(verges)
+> 
+> ## fit vectors for the environmental data
+> sol <- envfit(bp.sym, verges, which = "response")
+> sol
+
+***VECTORS
+
+            COCA 1   COCA 2     r2 Pr(>r)    
+Mmoisture  0.96693  0.25505 0.5749  0.001 ***
+Zmoisture  0.97608  0.21741 0.5600  0.001 ***
+Org        0.99122  0.13224 0.4313  0.001 ***
+Sandiness -0.42600  0.90472 0.3054  0.022 *  
+pH         0.28519 -0.95847 0.3911  0.002 ** 
+NO3        0.55393 -0.83256 0.2290  0.043 *  
+NH4       -0.74618  0.66575 0.2105  0.067 .  
+Nmin       0.22988 -0.97322 0.0216  0.777    
+P         -0.66726  0.74482 0.4050  0.005 ** 
+K         -0.84995  0.52686 0.3329  0.007 ** 
+Nitr       0.57252 -0.81989 0.3048  0.014 *  
+HourSun   -0.87694 -0.48060 0.0889  0.337    
+Warmth35  -0.98677  0.16213 0.0383  0.624    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+P values based on 999 permutations.
+
+
+> 
+> ## plot the response matrix and the fitted vectors
+> plot(bp.sym)
+> plot(sol)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fitted.symcoca")
+> ### * fitted.symcoca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fitted.symcoca
+> ### Title: Fitted values of a Symmetric Co-Correpsondence analysis model.
+> ### Aliases: fitted.symcoca print.fitted.symcoca
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## symmetric CoCA
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> 
+> ## fit the model
+> bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## fitted values
+> bp.fit <- fitted(bp.sym)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("permutest.coca")
+> ### * permutest.coca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: permutest.coca
+> ### Title: Permutation test for predictive co-correspondence analysis
+> ###   models
+> ### Aliases: permutest.coca print.permutest.coca summary.permutest.coca
+> ###   print.summary.permutest.coca
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> ## load some data
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> ## predictive CoCA using SIMPLS and formula interface
+> bp.pred <- coca(beetles ~ ., data = plants)
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## should retain only the useful PLS components for a parsimonious model
+> ## Not run: 
+> ##D ## Leave-one-out crossvalidation - this takes a while
+> ##D crossval(beetles, plants)
+> ##D ## so 2 axes are sufficient
+> ##D 
+> ##D ## permutation test to assess significant PLS components - takes a while
+> ##D bp.perm <- permutest(bp.pred, permutations = 99)
+> ##D bp.perm
+> ##D summary(bp.perm)
+> ## End(Not run)
+> 
+> ## permutation test, this time only testing the first 2 axes
+> bp.perm <- permutest(bp.pred, permutations = 99, n.axes = 2)
+Permutations for axis: 1 - completed
+Permutations for axis: 2 - completed
+> bp.perm
+
+Permutation test for predictive co-correspondence analysis:
+
+Call: permutest.coca(x = bp.pred, permutations = 99, n.axes = 2)
+
+Permutation test results:
+
+         Stat. Inertia     Fit   % fit P-value
+COCA 1  0.1146  3.9883  0.4102 10.2843    0.01
+COCA 2  0.0966  3.5782  0.3153  7.9068    0.01
+
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.predcoca")
+> ### * plot.predcoca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.predcoca
+> ### Title: Biplots for predictive co-correspondence analysis
+> ### Aliases: plot.predcoca
+> ### Keywords: hplot
+> 
+> ### ** Examples
+> 
+> ## predictive CoCA
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> 
+> ## predictive CoCA using SIMPLS and formula interface
+> bp.pred <- coca(beetles ~ ., data = plants)
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## draw the biplot for the response
+> plot(bp.pred)
+> 
+> ## plot of both
+> layout(matrix(1:2, ncol = 2))
+> plot(bp.pred, which = "response", main = "Beetles")
+> plot(bp.pred, which = "predictor", main = "Plants")
+> layout(1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.symcoca")
+> ### * plot.symcoca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.symcoca
+> ### Title: Biplots for symmetric co-correspondence analysis
+> ### Aliases: plot.symcoca
+> ### Keywords: hplot methods
+> 
+> ### ** Examples
+> 
+> ## symmetric CoCA
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> 
+> ## fit the model
+> bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## draw a biplot of the response
+> plot(bp.sym)
+> 
+> ## plot of both
+> layout(matrix(1:2, ncol = 2))
+> plot(bp.sym, which = "response", main = "Beetles")
+> plot(bp.sym, which = "predictor", main = "Plants")
+> layout(1)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("points.coca")
+> ### * points.coca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: points.coca
+> ### Title: Add points to a Co-CA plot
+> ### Aliases: points.coca
+> ### Keywords: methods
+> 
+> ### ** Examples
+> 
+> ## symmetric CoCA
+> data(beetles)
+> data(plants)
+>      
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+>      
+> ## fit the model
+> bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## draw a biplot of the response
+> plot(bp.sym, type = "none")
+> points(bp.sym, display = "sites", col = "blue", pch = 16)
+> points(bp.sym, display = "species", col = "red", pch = 3, cex = 0.8)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("rescale")
+> ### * rescale
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: rescale
+> ### Title: Rescales CoCA species scores
+> ### Aliases: rescale rescale.default rescale.symcoca
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> data(bryophyte)
+> data(vascular)
+> 
+> bryo.sym <- coca(bryophyte ~ ., data = vascular, method = "symmetric")
+> 
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("resid.symcoca")
+> ### * resid.symcoca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: resid.symcoca
+> ### Title: Extract Model Residuals
+> ### Aliases: resid.symcoca
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> data(bryophyte)
+> data(vascular)
+> bryo.sym <- coca(bryophyte ~ ., data = vascular, method = "symmetric")
+> eps <- resid(bryo.sym)
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("scores.predcoca")
+> ### * scores.predcoca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: scores.predcoca
+> ### Title: Get Species or Site Scores from an Ordination
+> ### Aliases: scores.predcoca scores.symcoca
+> ### Keywords: multivariate methods
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> ## load some data
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> 
+> ## fit the model, a symmetric CoCA
+> bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## extract the scores
+> scr <- scores(bp.sym)
+> 
+> ## predictive CoCA using SIMPLS and formula interface
+> bp.pred <- coca(beetles ~ ., data = plants)
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix x
+
+> scr2 <- scores(bp.pred)
+> 
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summary.predcoca")
+> ### * summary.predcoca
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summary.predcoca
+> ### Title: Summarizing Co-CA Model Fits
+> ### Aliases: summary.predcoca print.summary.predcoca summary.symcoca
+> ###   print.summary.symcoca
+> ### Keywords: multivariate
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> ## symmetric CoCA
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> 
+> ## fit the model
+> bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## Different scaling
+> 
+> ## Predictive CoCA
+> bp.pred <- coca(beetles ~ ., data = plants)
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants) :
+  some species contain no data and were removed from data matrix x
+
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> cleanEx()
+> nameEx("weights")
+> ### * weights
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: weights.symcoca
+> ### Title: Exctract CoCA model weights
+> ### Aliases: weights.symcoca weights.predcoca
+> ### Keywords: methods utilities
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+> od <- options(digits = 4)
+> ## End Don't show
+> ## symmetric CoCA
+> data(beetles)
+> data(plants)
+> 
+> ## log transform the bettle data
+> beetles <- log(beetles + 1)
+> 
+> ## fit the model
+> bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix y
+
+Warning in coca.formula(beetles ~ ., data = plants, method = "symmetric") :
+  some species contain no data and were removed from data matrix x
+
+> 
+> ## weights == R[0]
+> weights(bp.sym)
+ [1] 0.035489 0.066825 0.059489 0.016669 0.014273 0.035410 0.043867 0.041651
+ [9] 0.041095 0.027423 0.015292 0.031494 0.015375 0.020180 0.044767 0.005187
+[17] 0.039421 0.046358 0.035868 0.061151 0.030418 0.032824 0.021131 0.045564
+[25] 0.044300 0.047454 0.033503 0.034276 0.002230 0.011013
+> ## Don't show: 
+> options(od)
+> ## End Don't show
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  8.518 0.053 8.96 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

@@ -10,10 +10,10 @@
 \usage{
 
 \method{scores}{predcoca}(x, choices = c(1, 2),
-       display = c("sites","species"), \ldots)
+       display = c("sites","species"), \dots)
 
 \method{scores}{symcoca}(x, choices = c(1, 2),
-       display = c("sites","species"), scaling = 1, \ldots)
+       display = c("sites","species"), scaling = 1, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -59,19 +59,25 @@
   \code{\link[vegan]{scores}}, for further details on the method.
 }
 \examples{
+\testonly{od <- options(digits = 4)}
 ## load some data
 data(beetles)
 data(plants)
+
 ## log transform the bettle data
 beetles <- log(beetles + 1)
+
 ## fit the model, a symmetric CoCA
 bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
+
 ## extract the scores
-scores(bp.sym)
+scr <- scores(bp.sym)
 
 ## predictive CoCA using SIMPLS and formula interface
 bp.pred <- coca(beetles ~ ., data = plants)
-scores(bp.pred)
+scr2 <- scores(bp.pred)
+
+\testonly{options(od)}
 }
 \keyword{multivariate}
 \keyword{methods}
