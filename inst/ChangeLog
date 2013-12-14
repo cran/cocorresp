@@ -1,5 +1,21 @@
 Cocorresp Change Log
 
+Version 0.2-1
+
+	* envfit.coca: now does weighted correlations in common with
+	`envfit.default` for weighted ordinations.
+
+	* weights: new methods for objects of classes "symcoca" and
+	"predcoca".
+
+	* fitted.symcoca: was not preserving the names of the `X`
+	and `Y` community matrices. The `print` method now squishes
+	very small variations in the results resulting from floating
+	point computations.
+
+	* Tests: The package Examples are now checked against known
+	good runs as part of new package checks in `./tests/`.
+
 Version 0.2-0
 
 	* NAMESPACE: cocorresp now has a namespace and imports from

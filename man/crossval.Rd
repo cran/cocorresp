@@ -78,10 +78,11 @@ crossval(y, x, n.axes = min(dim(x), dim(y)) - 1,
 
 \seealso{The model fitting function \code{\link{coca}}}
 \examples{
-
+\testonly{od <- options(digits = 4)}
 ## load the data sets
 data(beetles)
 data(plants)
+
 ## log transform the bettle data
 beetles <- log(beetles + 1)
 
@@ -90,14 +91,11 @@ bp.pred <- coca(beetles ~ ., data = plants)
 ## should retain only the useful PLS components for a
 ## parsimonious model
 
-\dontrun{
 ## Leave-one-out crossvalidation - this takes a while
+\dontrun{
 crossval(beetles, plants)
-## so 2 axes are sufficient
 }
-
-bp.pred <- coca(beetles ~ ., data = plants, n.axes = 2)
-bp.pred
-summary(bp.pred)
+## so 2 axes are sufficient
+\testonly{options(od)}
 }
 \keyword{multivariate}

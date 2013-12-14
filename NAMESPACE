@@ -28,6 +28,8 @@ S3method(rescale, symcoca)
 S3method(resid, symcoca)
 S3method(scores, symcoca)
 S3method(scores, predcoca)
+S3method(weights, symcoca)
+S3method(weights, predcoca)
 
 ## plotting methods
 S3method(plot, predcoca)
@@ -43,10 +45,11 @@ S3method(print, permutest.coca)
 S3method(print, predcoca)
 S3method(print, summary.fitCoinertia)
 S3method(print, summary.symcoca)
+S3method(print, summary.permutest.coca)
 S3method(print, summary.predcoca)
 S3method(print, symcoca)
 
-## print methods
+## summary methods
 S3method(summary, fitCoinertia)
 S3method(summary, symcoca)
 S3method(summary, predcoca)
