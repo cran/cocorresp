@@ -15,15 +15,15 @@
         stop("all row sums must be >0 in data matrix y")
     if(any(csumy <= 0 )) {
         y <- y[, csumy > 0, drop = FALSE]
-        warning("some species contain no data and were removed from data matrix y\n")
-        csumy <- colSums(y)
+        message("some species contain no data and were removed from data matrix y\n")
+        csumy <- csumy[csumy > 0]       # colSums(y)
     }
     if(any(rsumx <= 0 ))
         stop("all row sums must be >0 in data matrix x")
     if(any(csumx <= 0 )) {
         x <- x[, csumx > 0, drop = FALSE]
-        warning("some species contain no data and were removed from data matrix x\n")
-        csumx <- colSums(x)
+        message("some species contain no data and were removed from data matrix x\n")
+        csumx <- csumx[csumx > 0]       # colSums(x)
     }
     sitesy <- rownames(y)
     sitesx <- rownames(x)
@@ -35,22 +35,26 @@
     nry <- nrow(x)
     ncy <- ncol(y)
     ncx <- ncol(x)
-    if(nrx != nry) stop("Number of rows in y and x is not equal")
+    if (nrx != nry) {
+        stop("Number of rows in y and x is not equal")
+    }
     max.axes <- min(ncy, ncx, nry, nrx) - 1
-    if(is.null(n.axes)) {
+    if (is.null(n.axes)) {
         n.axes <- max.axes
     } else {
-        if(n.axes > max.axes) {
+        if (n.axes > max.axes) {
             n.axes <- max.axes
             warning("n.axes greater than min(n,p,q)-1,\nreset to min(n,p,q)-1")
         }
     }
     Axes <- seq_len(n.axes)
-    ax.names <- paste("COIN", Axes, sep = " ")
-    if(is.null(weights)) {
-        if (symmetric)
+    ax.names <- paste("COIN", Axes, sep = "")
+    if (is.null(weights)) {
+        if (symmetric) {
             weights <- (rsumy + rsumx) / 2
-        else weights <- rsumy
+        } else {
+            weights <- rsumy
+        }
     }
     .R0 <- weights / sum(weights)
     .csy <- csumy / toty
@@ -86,7 +90,7 @@
                 sites = list(Y = X1, X = X2)), weights = weights,
                 lambda = lambda, n.axes = n.axes,
                 symmetric = symmetric, call = match.call())
-    class(res) <- "coinertia"
+    class(res) <- c("coinertia", "list")
     res
 }
 

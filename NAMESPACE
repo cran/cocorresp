@@ -1,12 +1,43 @@
 ## Imports
 ##
 ## vegan
-importFrom(vegan, scores, pasteCall, permutest, envfit, vectorfit,
-           factorfit, eigenvals)
+importFrom("vegan",
+           "scores",
+           "pasteCall",
+           "permutest",
+           "envfit",
+           "vectorfit",
+           "factorfit",
+           "eigenvals")
 ## stats
-import(stats)
+importFrom("stats",
+           "resid",
+           "weights",
+           "complete.cases",
+           "cor",
+           "model.frame",
+           "model.matrix",
+           "na.fail",
+           "printCoefmat",
+           "runif",
+           "terms",
+           "screeplot")
 ## graphics
-import(graphics)
+importFrom("graphics",
+           "abline",
+           "plot",
+           "axis",
+           "box",
+           "par",
+           "plot.new",
+           "plot.window",
+           "points",
+           "text",
+           "title")
+## grDevices
+importFrom("grDevices", "xy.coords")
+## utils
+importFrom("utils", "flush.console")
 
 ## Exports
 export(coca, coinertia, corAxis, crossval, rescale)
@@ -36,6 +67,7 @@ S3method(weights, predcoca)
 S3method(plot, predcoca)
 S3method(plot, symcoca)
 S3method(points, coca)
+S3method(screeplot, symcoca)
 
 ## print methods
 S3method(print, coinertia)
