@@ -4,7 +4,7 @@
 %\VignetteIndexEntry{Introduction to cocorresp}
 -->
 
-```{r setup, echo = FALSE, results = "hide", message = FALSE}
+```{r setup, echo = FALSE, results = "hide", message = FALSE, cache = FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 library("cocorresp")
 ```
@@ -43,7 +43,7 @@ The data are observations of beetle and vascular plant species abundance at 30 r
 
 Both forms of Co-CA are fitted using the `coca()` function. The call comprises
 
-1. a formula, where the left-hand side is a community data frame or matric, and the right-hand side is typically a `.`,
+1. a formula, where the left-hand side is a community data frame or matrix, and the right-hand side is typically a `.`,
 2. a `data` argument supplied a suitable data frame or matrix. This is the object used to form the terms on the right-hand side of the formula indicated by the `.` placeholder,
 3. the type of Co-CA model to fit, indicated by the `method` argument; options are `"symmetric"` and `"predictive"`.
 
@@ -53,7 +53,7 @@ A symmetric Co-CA is fitted to the beetle and plant data sets as follows
 bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
 ```
 
-Notice that it shouldn't make any difference which of the matrices is specified on the right- or left-hand sides of the formula. The messages printing suring fitting are for information; some species contained no data and hence were removed prior to fitting. This data processing step could have bee performed ahead of time via
+Notice that it shouldn't make any difference which of the matrices is specified on the right- or left-hand sides of the formula. The messages printing during fitting are for information; some species contained no data and hence were removed prior to fitting. This data processing step could have been performed ahead of time via
 
 ```{r data-process, message = TRUE}
 beetles <- beetles[, colSums(beetles) > 0]
@@ -67,25 +67,25 @@ Printing the resulting object provides a relatively compact summary of the Co-CA
 bp.sym
 ```
 
-A scrreplot provides a compact summary of the dimensionality of the covariance between the two matrices.
+A screeplot provides a graphical summary of the dimensionality of the covariance between the two matrices.
 
 ```{r screeplot-symcoca}
 screeplot(bp.sym)
 ```
 
-From the screeplot, we see that most of the signal in the covariance is contained on the first 2-3 axes.
+From the screeplot, we see that most of the signal in the covariance is contained on the first 2--3 axes.
 
-The resulting symmetric cocorrespondence analysis can be plotted in the form of a biplot, except now we have two sets of species (variable) scores and two sets of site (observations or sample) scores. The `plot` method can be used to draw the Co-CA biplots. The `which` argument selects which of two asemblages are drawn:
+The resulting symmetric co-correspondence analysis can be plotted in the form of a biplot, except now we have two sets of species (variable) scores and two sets of site (observations or sample) scores. The `biplot` method can be used to draw Co-CA biplots. The `which` argument selects which of the two assemblages are drawn:
 
-* `"response"` indicates the species assemblage on the left-hand side of the formula,
-* `"predictor"` indicates the species assemblag on the right-hand side of the formula.
+* `"y1"` indicates the species assemblage on the left-hand side of the formula,
+* `"y2"` indicates the species assemblage on the right-hand side of the formula.
 
 ```{r plot-symcoca, fig.width = 14, fig.height = 7, fig.show = "hold"}
 layout(matrix(1:2, ncol = 2))
-plot(bp.sym, which = "response", main = "Beetles")
-plot(bp.sym, which = "predictor", main = "Plants")
+biplot(bp.sym, which = "y1", main = "Beetles")
+biplot(bp.sym, which = "y2", main = "Plants")
 layout(1)
 ```
 
-Some additional control is afforded by the `plot()` method, but good plots of the fitted Co-CA will often require the use of lower-level functions such as the `points()` and `scores()` methods.
+Some additional control is afforded by the `plot()` method, but good plots of the fitted Co-CA will often require the use of lower-level functions such as the `points()` and `scores()` methods, as well as using appropriate sets of scores or loadings.
 

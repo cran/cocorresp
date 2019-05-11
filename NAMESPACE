@@ -15,13 +15,15 @@ importFrom("stats",
            "weights",
            "complete.cases",
            "cor",
+           "loadings",
            "model.frame",
            "model.matrix",
            "na.fail",
            "printCoefmat",
            "runif",
            "terms",
-           "screeplot")
+           "screeplot",
+           "setNames")
 ## graphics
 importFrom("graphics",
            "abline",
@@ -52,8 +54,15 @@ S3method(corAxis, default)
 S3method(corAxis, symcoca)
 S3method(eigenvals, coinertia)
 S3method(eigenvals, coca)
+S3method(eigenvals, fitCoinertia)
+S3method(eigenvals, summary.predcoca)
+S3method(eigenvals, summary.symcoca)
+S3method(eigenvals, summary.fitCoinertia)
 S3method(envfit, coca)
 S3method(fitted, symcoca)
+S3method(loadings, default)
+S3method(loadings, symcoca)
+S3method(loadings, predcoca)
 S3method(permutest, coca)
 S3method(rescale, default)
 S3method(rescale, symcoca)
@@ -64,6 +73,8 @@ S3method(weights, symcoca)
 S3method(weights, predcoca)
 
 ## plotting methods
+S3method(biplot, symcoca)
+S3method(biplot, predcoca)
 S3method(plot, predcoca)
 S3method(plot, symcoca)
 S3method(points, coca)

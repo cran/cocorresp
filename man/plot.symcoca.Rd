@@ -1,13 +1,13 @@
 \name{plot.symcoca}
 \alias{plot.symcoca}
-\title{Biplots for symmetric co-correspondence analysis}
+\title{Plots for symmetric co-correspondence analysis}
 \description{
-  Produces biplots of the response and predictor from the results of a
+  Produces plots of the response and predictor from the results of a
   symmetric co-correspondence analysis.
 }
 \usage{
 \method{plot}{symcoca}(x,
-    which = c("response", "predictor"),
+    which = "response",
     choices = 1:2,
     display = c("species", "sites"),
     scaling = FALSE,
@@ -67,13 +67,13 @@
 data(beetles)
 data(plants)
 
-## log transform the bettle data
+## log transform the beetle data
 beetles <- log(beetles + 1)
 
 ## fit the model
 bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
 
-## draw a biplot of the response
+## draw a plot of the response scores
 plot(bp.sym)
 
 ## plot of both

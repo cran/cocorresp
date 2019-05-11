@@ -1,4 +1,4 @@
-## ----setup, echo = FALSE, results = "hide", message = FALSE--------------
+## ----setup, echo = FALSE, results = "hide", message = FALSE, cache = FALSE----
 knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 library("cocorresp")
 
@@ -24,7 +24,7 @@ screeplot(bp.sym)
 
 ## ----plot-symcoca, fig.width = 14, fig.height = 7, fig.show = "hold"-----
 layout(matrix(1:2, ncol = 2))
-plot(bp.sym, which = "response", main = "Beetles")
-plot(bp.sym, which = "predictor", main = "Plants")
+biplot(bp.sym, which = "y1", main = "Beetles")
+biplot(bp.sym, which = "y2", main = "Plants")
 layout(1)
 

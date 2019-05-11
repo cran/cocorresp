@@ -1,5 +1,5 @@
 `plot.predcoca` <- function(x,
-                            which = c("response", "predictor"),
+                            which = "response",
                             choices = 1:2,
                             display = c("species", "sites"),
                             type,
@@ -11,16 +11,20 @@
                             axes = TRUE,
                             ...) {
     ## process the scores to display
-    if(missing(display))
+    if(missing(display)) {
         display <-  c("species", "sites")
+    }
     display <- match.arg(display, several.ok = TRUE)
     ## what are we plotting, response or predictor?
-    which <- match.arg(which)
+    if (length(which) > 1L) {
+        message("Only a single value of 'which' is allowed.\nUsing first supplied.")
+    }
     ## and map to X and Y for extraction
-    WHICH <- ifelse(which == "response", "Y", "X")
+    WHICH <- selectWhich(which)
     ## need two and only two axes to plot
-    if(length(choices) != 2)
+    if(length(choices) != 2L) {
         stop("Exactly two axes should be specified in `choices`")
+    }
     ## extract the scores
     scrs <- scores(x, choices = choices, display = display)
     ## then extract the response or predictor scores
@@ -41,12 +45,14 @@
         xlim <- range(sapply(xy, function(x) range(x$x[is.finite(x$x)])))
     if (is.null(ylim))
         ylim <- range(sapply(xy, function(x) range(x$y[is.finite(x$y)])))
+    ## eigenvals
+    eig <- eigenvals(x)
     ## process x/y labels
     if(missing(xlab)) {
         xlabs <- sapply(xy, `[[`, "xlab")
         xlab <- xlabs[!is.null(xlabs)][1]
-        if(!is.null(x$lambda)) {
-            eigx <- round(x$lambda[choices[1]], 4)
+        if(!is.null(eig)) {
+            eigx <- round(eig[choices[1]], 4)
             xlab <- bquote(.(xlab) ~~ (lambda[.(choices[1])] == .(eigx)))
         } else {
             xlab <- bquote(.(xlab))
@@ -55,15 +61,13 @@
     if(missing(ylab)) {
         ylabs <- sapply(xy, `[[`, "ylab")
         ylab <- ylabs[!is.null(ylabs)][1]
-        if(!is.null(x$lambda)) {
-            eigy <- round(x$lambda[choices[2]], 4)
+        if(!is.null(eig)) {
+            eigy <- round(eig[choices[2]], 4)
             ylab <- bquote(.(ylab) ~~ (lambda[.(choices[2])] == .(eigy)))
         } else {
             ylab <- bquote(.(ylab))
         }
     }
-    #opar <- par(no.readonly=TRUE)
-    #on.exit(par(opar))
     ## plotting
     plot.new()
     plot.window(xlim, ylim, ...)

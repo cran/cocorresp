@@ -1,5 +1,5 @@
 `plot.symcoca` <- function(x,
-                           which = c("response", "predictor"),
+                           which = "response",
                            choices = 1:2,
                            display = c("species", "sites"),
                            scaling = FALSE,
@@ -12,16 +12,20 @@
                            axes = TRUE,
                            ...) {
     ## process the scores to display
-    if(missing(display))
+    if(missing(display)) {
         display <-  c("species", "sites")
+    }
     display <- match.arg(display, several.ok = TRUE)
     ## what are we plotting, response or predictor?
-    which <- match.arg(which)
+    if (length(which) > 1L) {
+        message("Only a single value of 'which' is allowed.\nUsing first supplied.")
+    }
     ## and map to X and Y for extraction
-    WHICH <- ifelse(which == "response", "Y", "X")
+    WHICH <- selectWhich(which)
     ## should the scores be rescaled - only for species though
-    if(is.logical(scaling))
+    if(is.logical(scaling)) {
         scaling <- ifelse(scaling, 2, 1)
+    }
     ## need two and only two axes to plot
     if(length(choices) != 2)
         stop("Exactly two axes should be specified in `choices`")
@@ -46,17 +50,18 @@
         xlim <- range(sapply(xy, function(x) range(x$x[is.finite(x$x)])))
     if (is.null(ylim))
         ylim <- range(sapply(xy, function(x) range(x$y[is.finite(x$y)])))
-    ## process x/y labels
+    ## process x/y label
+    ev <- eigenvals(x)
     if(missing(xlab)) {
         xlabs <- sapply(xy, `[[`, "xlab")
         xlab <- xlabs[!is.null(xlabs)][1]
-        eigx <- round(x$lambda[choices[1]], 4)
+        eigx <- round(ev[choices[1]], 4)
         xlab <- bquote(.(xlab) ~~ (lambda[.(choices[1])] == .(eigx)))
     }
     if(missing(ylab)) {
         ylabs <- sapply(xy, `[[`, "ylab")
         ylab <- ylabs[!is.null(ylabs)][1]
-        eigy <- round(x$lambda[choices[2]], 4)
+        eigy <- round(ev[choices[2]], 4)
         ylab <- bquote(.(ylab) ~~ (lambda[.(choices[2])] == .(eigy)))
     }
     #opar <- par(no.readonly=TRUE)

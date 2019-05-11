@@ -17,11 +17,11 @@ coca(y, \ldots)
 
 \method{coca}{default}(y, x, method = c("predictive", "symmetric"),
      reg.method = c("simpls", "eigen"), weights = NULL,
-     n.axes = NULL, symmetric = FALSE, \ldots)
+     n.axes = NULL, symmetric = FALSE, quiet = FALSE, \ldots)
 
 \method{coca}{formula}(formula, data, method = c("predictive", "symmetric"),
      reg.method = c("simpls", "eigen"), weights = NULL,
-     n.axes = NULL, symmetric = FALSE, \ldots)
+     n.axes = NULL, symmetric = FALSE, quiet = FALSE, \ldots)
 
 }
 
@@ -65,6 +65,9 @@ coca(y, \ldots)
     unless user defined weights are provided via argument
     \code{weights}. Ignored if \code{method} is \code{"predictive"}.}
 
+  \item{quiet}{logical; suppress messages due to removal of species with
+    no data.}
+
   \item{\dots}{additional arguments to be passed to lower level methods.}
 }
 \details{
@@ -106,9 +109,9 @@ coca(y, \ldots)
     and the predictor. (Predictive CoCA via SIMPLS only.)}
 
   \item{fitted}{the fitted values for the response. A list with 2
-    components \code{Yhat} (the fitted values) and
-    \code{Yhat1} (the transformed fitted values. (Predictive
-    CoCA via SIMPLS only.)}
+    components \code{Yhat} (the fitted values on the original scale) and
+    \code{Yhat1} (the fitted values on the chi-square transformed
+    scale). (Predictive CoCA via SIMPLS only.)}
 
   \item{varianceExp}{list with components \code{Yblock} and
     \code{Xblock} containing the variances in the response and
@@ -181,28 +184,34 @@ data(plants)
 ## fit the model
 bp.sym <- coca(beetles ~ ., data = plants, method = "symmetric")
 bp.sym
-\donttest{summary(bp.sym)}
-plot(bp.sym)
+summary(bp.sym)
+biplot(bp.sym)                          # produces a Benzecri biplot
+
+## extract eigenvalues of the analysis
+eigenvals(bp.sym)
+
+## correlations between beetle and plant score scores on Co-CA axes
+corAxis(bp.sym)
 
 ## predictive CoCA using SIMPLS and formula interface
 bp.pred <- coca(beetles ~ ., data = plants)
 ## should retain only the useful PLS components for a parsimonious model
 
+\donttest{
 ## Leave-one-out crossvalidation - this takes a while
-
-\dontrun{
 crossval(beetles, plants)
 ## so 2 axes are sufficient
 ## permutation test to assess significant PLS components - takes a while
 bp.perm <- permutest(bp.pred, permutations = 99)
-bp.perm}
+bp.perm
+}
 
 ## agrees with the Leave-one-out cross-validation
 ## refit the model with only 2 PLS components
 bp.pred <- coca(beetles ~ ., data = plants, n.axes = 2)
 bp.pred
-\donttest{summary(bp.pred)}
-plot(bp.pred)
+summary(bp.pred)
+biplot(bp.pred)                     # plots correct scores or loadings
 
 ## predictive CoCA using Eigen-analysis
 data(bryophyte)
@@ -210,17 +219,18 @@ data(vascular)
 carp.pred <- coca(y = bryophyte, x = vascular, reg.method = "eigen")
 carp.pred
 
+\donttest{
 ## determine important PLS components - takes a while
-\dontrun{
 crossval(bryophyte, vascular)
-(carp.perm <- permutest(carp.pred, permutations = 99))}
+(carp.perm <- permutest(carp.pred, permutations = 99))
+}
 
 ## 2 components again, refit
 carp.pred <- coca(y = bryophyte, x = vascular,
                   reg.method = "eigen", n.axes = 2)
 carp.pred
-## plot
-plot(carp.pred)
+## drawn biplot
+biplot(carp.pred)
 \testonly{options(od)}
 }
 \keyword{multivariate}
