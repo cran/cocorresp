@@ -1,11 +1,11 @@
 Package: cocorresp
 Type: Package
 Title: Co-Correspondence Analysis Methods
-Version: 0.4-3
-Date: 2021-05-07
+Version: 0.4-4
+Date: 2024-02-20
 Depends: vegan (>= 2.5-0), R (>= 3.4.0)
 Imports: stats, graphics, utils, grDevices
-Suggests: testthat, knitr, rmarkdown
+Suggests: testthat, knitr, rmarkdown, pls
 Author: Original Matlab routines by C.J.F. ter Braak and A.P. Schaffers. R port by Gavin L. Simpson.
   Function simpls based on simpls.fit (package pls) by Ron Wehrens and Bjorn-Helge Mevik.
 Maintainer: Gavin L. Simpson <ucfagls@gmail.com>
@@ -15,6 +15,6 @@ URL: https://gavinsimpson.github.io/cocorresp/
 BugReports: https://github.com/gavinsimpson/cocorresp/issues
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2021-05-07 08:26:46 UTC; gavin
+Packaged: 2024-02-20 18:57:08 UTC; au690221
 Repository: CRAN
-Date/Publication: 2021-05-07 08:50:08 UTC
+Date/Publication: 2024-02-26 15:10:03 UTC
